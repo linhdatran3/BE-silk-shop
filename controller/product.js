@@ -91,7 +91,6 @@ module.exports.addProduct = async (req, res) => {
 
     //upload image
     if (req.file) {
-
       //fileName
       let extension = req.file.originalname.substring(
         req.file.originalname.lastIndexOf(".")
@@ -133,7 +132,7 @@ module.exports.editProduct = async (req, res) => {
     });
   } else {
     try {
-      const proEdit = await Product.updateMany(
+      const proEdit = await Product.findByIdAndUpdate(
         { _id: req.params.id },
         {
           title: req.body.title,

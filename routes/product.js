@@ -11,19 +11,18 @@ let uploadFile = multer({
   dest: "temp/",
   limits: { fileSize: maxSize },
 });
-router.post("/upload", uploadFile.single("file"), file.upload);
 
 router.get("/", product.getAllProducts);
 router.get("/categories", product.getProductCategories);
 router.get("/category/:category", product.getProductsInCategory);
 router.get("/:id", product.getProduct);
 
-router.post("/", uploadFile.single("file"), product.addProduct);
+router.post("/:id", uploadFile.single("image"), product.editProduct);
+router.post("/", uploadFile.single("image"), product.addProduct);
 
 // router.get("/files", file.getListFiles);
 // router.get("/files/:name", file.download);
 
-router.put("/:id", product.editProduct);
 router.patch("/:id", product.editProduct);
 router.delete("/:id", product.deleteProduct);
 
