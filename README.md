@@ -1,28 +1,18 @@
-# FakeStoreAPI
-
-[FakeStoreAPI](https://fakestoreapi.com) is a free online REST API that you can use whenever you need Pseudo-real data for
-your e-commerce or shopping website without running any server-side code.
-It's awesome for teaching purposes, sample codes, tests and etc.
-
-You can visit in detail docs in [FakeStoreAPI](https://fakestoreapi.com) for more information.
-
-## Why?
-
-When I wanted to design a shopping website prototype and needed fake data, I had to
-use lorem ipsum data or create a JSON file from the base. I didn't find any online free web service
-to return semi-real shop data instead of lorem ipsum data.
-so I decided to create this simple web service with NodeJs(express) and MongoDB as a database.
+# BE Silkshop API
+- Overview: silk shop is a website that sells furniture products.
+- Service with NodeJs(express) and MongoDB (atlas) as a database.
 
 ## Resources
 
 There are 4 main resources need in shopping prototypes:
 
-- Products https://fakestoreapi.com/products
-- Carts https://fakestoreapi.com/carts
-- Users https://fakestoreapi.com/users
-- Login Token https://fakestoreapi.com/auth/login
+- Products [https://silkshop.herokuapp/products](https://silkshop.herokuapp.com/)
+- Carts [https://silkshop.herokuapp/carts](https://silkshop.herokuapp.com/)
+- Users [https://silkshop.herokuapp/users](https://silkshop.herokuapp.com/)
+- Login [https://silkshop.herokuapp/auth/login](https://silkshop.herokuapp.com/)
+- Admin [https://silkshop.herokuapp/admin](https://silkshop.herokuapp.com/)
 
-### New! "Rating" (includes rate and count) has been added to each product object!
+Notes: some APIs require tokens
 
 ## How to
 
@@ -31,7 +21,7 @@ you can fetch data with any kind of methods you know(fetch API, Axios, jquery aj
 ### Get all products
 
 ```js
-fetch("https://fakestoreapi.com/products")
+fetch("https://silkshop.herokuapp.com/products")
   .then((res) => res.json())
   .then((json) => console.log(json));
 ```
@@ -39,7 +29,7 @@ fetch("https://fakestoreapi.com/products")
 ### Get a single product
 
 ```js
-fetch("https://fakestoreapi.com/products/1")
+fetch("https://silkshop.herokuapp.com/products/1")
   .then((res) => res.json())
   .then((json) => console.log(json));
 ```
@@ -47,7 +37,7 @@ fetch("https://fakestoreapi.com/products/1")
 ### Add new product
 
 ```js
-fetch("https://fakestoreapi.com/products", {
+fetch("https://silkshop.herokuapp.com/products", {
   method: "POST",
   body: JSON.stringify({
     title: "test product",
@@ -56,6 +46,9 @@ fetch("https://fakestoreapi.com/products", {
     image: "https://i.pravatar.cc",
     category: "electronic",
   }),
+  header:{
+    Authorization:"Bearer " + token,
+  }
 })
   .then((res) => res.json())
   .then((json) => console.log(json));
@@ -77,7 +70,7 @@ Note: Posted data will not really insert into the database and just return a fak
 ### Updating a product
 
 ```js
-fetch("https://fakestoreapi.com/products/7", {
+fetch("https://silkshop.herokuapp.com/products/7", {
   method: "PUT",
   body: JSON.stringify({
     title: "test product",
@@ -86,6 +79,9 @@ fetch("https://fakestoreapi.com/products/7", {
     image: "https://i.pravatar.cc",
     category: "electronic",
   }),
+  header:{
+    Authorization:"Bearer " + token,
+  }
 })
   .then((res) => res.json())
   .then((json) => console.log(json));
@@ -103,7 +99,7 @@ fetch("https://fakestoreapi.com/products/7", {
 ```
 
 ```js
-fetch("https://fakestoreapi.com/products/8", {
+fetch("https://silkshop.herokuapp.com/products/8", {
   method: "PATCH",
   body: JSON.stringify({
     title: "test product",
@@ -112,6 +108,9 @@ fetch("https://fakestoreapi.com/products/8", {
     image: "https://i.pravatar.cc",
     category: "electronic",
   }),
+  header:{
+    Authorization:"Bearer " + token,
+  }
 })
   .then((res) => res.json())
   .then((json) => console.log(json));
@@ -128,28 +127,18 @@ fetch("https://fakestoreapi.com/products/8", {
 */
 ```
 
-Note: Edited data will not really be updated into the database.
 
 ### Deleting a product
 
 ```js
-fetch("https://fakestoreapi.com/products/8", {
+fetch("https://silkshop.herokuapp.com/products/8", {
   method: "DELETE",
+  header:{
+    Authorization:"Bearer " + token,
+  }
 });
 ```
 
-Nothing will delete on the database.
-
-### Sort and Limit
-
-You can use query string to limit results or sort by asc|desc
-
-```js
-// Will return all the posts that belong to the first user
-fetch("https://fakestoreapi.com/products?limit=3&sort=desc")
-  .then((res) => res.json())
-  .then((json) => console.log(json));
-```
 
 ## All available routes
 
@@ -171,11 +160,8 @@ GET:
 
 - /products (get all products)
 - /products/1 (get specific product based on id)
-- /products?limit=5 (limit return results )
-- /products?sort=desc (asc|desc get products in ascending or descending orders (default to asc))
 - /products/products/categories (get all categories)
-- /products/category/jewelery (get all products in specific category)
-- /products/category/jewelery?sort=desc (asc|desc get products in ascending or descending orders (default to asc))
+- /products/category/electronuc (get all products in specific category)
 
 POST:
 
@@ -205,11 +191,7 @@ GET:
 
 - /carts (get all carts)
 - /carts/1 (get specific cart based on id)
-- /carts?startdate=2020-10-03&enddate=2020-12-12 (get carts in date range)
 - /carts/user/1 (get a user cart)
-- /carts/user/1?startdate=2020-10-03&enddate=2020-12-12 (get user carts in date range)
-- /carts?limit=5 (limit return results )
-- /carts?sort=desc (asc|desc get carts in ascending or descending orders (default to asc))
 
 POST:
 
@@ -236,16 +218,7 @@ fields:
         firstname:String,
         lastname:String
         },
-    address:{
-    city:String,
-    street:String,
-    number:Number,
-    zipcode:String,
-    geolocation:{
-        lat:String,
-        long:String
-        }
-    },
+    address:String,
     phone:String
 }
 ```
@@ -254,8 +227,7 @@ GET:
 
 - /users (get all users)
 - /users/1 (get specific user based on id)
-- /users?limit=5 (limit return results )
-- /users?sort=desc (asc|desc get users in ascending or descending orders (default to asc))
+
 
 POST:
 
@@ -283,8 +255,17 @@ POST:
 
 - /auth/login
 
-## ToDo
+### Admin
+```js
+fields:
+{
+    id:Number,
+    username:String,
+    password:String,
+    role: Admin
+}
+```
+POST:
 
-- Add graphql support
-- Add pagination
-- Add another language support
+- /login
+- /add
