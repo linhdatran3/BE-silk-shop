@@ -1,6 +1,8 @@
 # BE Silkshop API
 - Overview: silk shop is a website that sells furniture products.
-- Service with NodeJs(express) and MongoDB (atlas) as a database.
+- Service with NodeJs(express) and MongoDB as a database.
+- Server: heroku [(https://silkshop.herokuapp/)](https://silkshop.herokuapp/).
+- Server database: mongoBD atlas [https://cloud.mongodb.com/v2#/org/61bc0bc28143494a3810f7c2/projects](https://cloud.mongodb.com/v2#/org/61bc0bc28143494a3810f7c2/projects)).
 
 ## Resources
 
@@ -65,7 +67,7 @@ fetch("https://silkshop.herokuapp.com/products", {
 */
 ```
 
-Note: Posted data will not really insert into the database and just return a fake id.
+
 
 ### Updating a product
 
